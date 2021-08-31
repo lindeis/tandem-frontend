@@ -1,3 +1,9 @@
 doctype html
 p Best tandem eva!
-a(href='/login') Login
+form
+	label Username
+	input.username(type="text")
+	label Password
+	input.password(type="password")
+	input.loginButton(type="submit", value="Login")
+a(href="/register") Registration
