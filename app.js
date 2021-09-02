@@ -10,11 +10,6 @@ app.get('/', function (req, res) {
 })
 
 app.use(express.static('public'));
-app.get('/login', function (req, res) {
-    res.render('login.pug')
-})
-
-app.use(express.static('public'));
 app.get('/register', function (req, res) {
     res.render('register.pug')
 })
