@@ -1,8 +1,13 @@
-form
-	label Username
-	input.username(type="text")
-	label Password
-	input.password1(type="password")
-	label Repeat Password
-	input.password2(type="password")
-	input.registerButton(type="submit", value="Register")
+doctype html
+head
+	script(src="register.js")
+body
+	form
+		label Username
+		input#username(type="text")
+		label Password
+		input#password1(type="password")
+		label Repeat Password
+		input#password2(type="password")
+		button#registerButton(type="button" onClick="register()") Register
+	p#message
