@@ -1,9 +1,13 @@
 doctype html
 p Best tandem eva!
+head
+	script(src="login.js")
 form
 	label Username
-	input.username(type="text")
+	input#username(type="text")
 	label Password
-	input.password(type="password")
-	input.loginButton(type="submit", value="Login")
+	input#password(type="password")
+	button#loginButton(type="button", onClick="postLogin()") Login
+p#error
+br
 a(href="/register") Registration
