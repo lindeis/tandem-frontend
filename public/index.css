@@ -1,0 +1,80 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.navbar {
+    background-color: #c04fe0;
+}
+
+.nav-link {
+    color: #3a3f47;
+    font-family: "Lucida Console", monospace;
+    font-size: 20px;
+    border-left: 1px solid #3a3f47;
+}
+
+.last-link.nav-link {
+    border-right: 1px solid #3a3f47;
+}
+
+.welcome {
+    padding-top: 62px;
+    width: 50%;
+    height: 100vh;
+}
+
+.welcome-left {
+    background-color: #ffac54;
+    float: left;
+}
+
+.welcome-right {
+    background-color: #4eb8dd;
+    float: right;
+}
+
+.welcome-pic {
+    margin-top: 234px;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    padding-bottom: 73px;
+}
+
+.welcome-text {
+    margin-top: 187px;
+    padding-left: 20px;
+    padding-right: 20px;
+    font-family: "Lucida Console", monospace;
+    font-size: 36px;
+    color: #3a3f47;
+    float: left;
+}
+
+.btn-primary {
+    font-family: "Lucida Console", monospace;
+    font-size: 36px;
+    margin-top: 50px;
+    left: 50%;
+    position: relative;
+    transform: translate(-50%, 0);
+}
+
+.learn-more {
+    background-color: #098fbb;
+}
+
+.play-now {
+    background-color: #ff9a2f;
+    color: #3a3f47;
+}
+
+.play-now:hover {
+    background-color: #ff8403;
+    color: black;
+}
+
+.play-now:active {
+    background-color: #ff8403;
+}

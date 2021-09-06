@@ -1,13 +1,27 @@
 doctype html
-p Best tandem eva!
 head
-	script(src="login.js")
-form
-	label Username
-	input#username(type="text")
-	label Password
-	input#password(type="password")
-	button#loginButton(type="button", onClick="postLogin()") Login
-p#error
-br
-a(href="/register") Registration
+	title Tandem Chess
+	link(rel='icon' href='assets/favicon.ico' type='image/x-icon')
+	link(rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css')
+	link(rel='stylesheet' type='text/css' href='index.css')
+body
+	nav.navbar.fixed-top.navbar-expand
+		a(href='/')
+			img.home-logo(src='assets/home-logo.png')
+		ul.navbar-nav.ml-auto
+			li.nav-item
+				a.nav-link(href='/rules') Rules
+			li.nav-item
+				a.nav-link(href='/login') Login
+			li.nav-item
+				a.last-link.nav-link(href='/register') Register
+	div.welcome.welcome-left
+		p.welcome-text.text-center
+			| Tandem chess is a co-operative chess variant played on two chessboards by four players in teams of two.
+			br
+			br
+			| Normal chess rules apply, except that captured pieces on one board are passed on to the teammate on the other board, who then has the option of putting these pieces on their board.
+		a.learn-more.btn.btn-primary.btn-lg(href='/rules', role='button') Learn more!
+	div.welcome.welcome-right
+		img.welcome-pic(src='assets/welcome-pic.png')
+		a.play-now.btn.btn-primary.btn-lg(href='/login', role='button') Play now!
