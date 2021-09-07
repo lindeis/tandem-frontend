@@ -14,4 +14,14 @@ app.get('/register', function (req, res) {
     res.render('register.pug')
 })
 
+app.use(express.static('public'));
+app.get('/lobby', function (req, res) {
+    res.render('lobby.pug')
+})
+
+app.use(express.static('public'));
+app.get('/room', function (req, res) {
+    res.render('room.pug')
+})
+
 app.listen(PORT, () => console.log(`Server listening on port: ${PORT}`));
