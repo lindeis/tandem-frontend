@@ -1,11 +1,13 @@
 doctype html
 head
+	link(rel="stylesheet", type="text/css", href="lobby.css")
 	script(src="lobby.js")
 body
 	h1 Lobby
-	table
+	table#roomTable.hidden
 		thead
 			tr
 				th Room Name
 				th Action
 		tbody#roomTableBody
+	p#message
