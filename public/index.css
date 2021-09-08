@@ -1,6 +1,55 @@
+@media (min-width: 768px) and (orientation:portrait) {
+    #welcome {
+        height: 50vh;
+    }
+
+    #welcome-text, #basic-rules, .btn-primary {
+        font-size: 2.25rem;
+    }
+
+    #pieces {
+        height: 50%;
+    }
+}
+
+@media (min-width: 768px) and (orientation:landscape) {
+    #welcome {
+        height: 100vh;
+    }
+
+    #welcome-text, #basic-rules, .btn-primary {
+        font-size: 1.5rem;
+    }
+
+    #pieces {
+        height: 75%;
+    }
+}
+
+@media (min-width: 992px) {
+    #welcome {
+        height: 100vh;
+    }
+
+    #welcome-text, #basic-rules, .btn-primary {
+        font-size: 1.95vw;
+    }
+
+    #pieces {
+        height: 27.2vw;
+    }
+}
+
 body {
     margin: 0;
     padding: 0;
+    font-size: 1;
+    font-family: 'Lucida Console', monospace;
+    line-height: 1.15;
+}
+
+p {
+    margin-bottom: 0;
 }
 
 .navbar {
@@ -9,8 +58,7 @@ body {
 
 .nav-link {
     color: #3a3f47;
-    font-family: "Lucida Console", monospace;
-    font-size: 20px;
+    font-size: 1.5rem;
     border-left: 1px solid #3a3f47;
 }
 
@@ -18,63 +66,59 @@ body {
     border-right: 1px solid #3a3f47;
 }
 
-.welcome {
-    padding-top: 62px;
-    width: 50%;
-    height: 100vh;
+.nav-link:hover {
+    color: black;
+}
+
+#pieces {
+    padding-top: 14%;
+    max-width: 100%;
 }
 
 .welcome-left {
     background-color: #ffac54;
-    float: left;
 }
 
 .welcome-right {
     background-color: #4eb8dd;
-    float: right;
 }
 
-.welcome-pic {
-    margin-top: 234px;
-    margin-left: auto;
-    margin-right: auto;
-    display: block;
-    padding-bottom: 73px;
-}
-
-.welcome-text {
-    margin-top: 187px;
-    padding-left: 20px;
-    padding-right: 20px;
-    font-family: "Lucida Console", monospace;
-    font-size: 36px;
+#welcome-text {
+    padding-top: 15%;
+    padding-left: 1%;
+    padding-right: 1%;
     color: #3a3f47;
-    float: left;
+}
+
+#basic-rules {
+    padding-top: 5%;
+    padding-left: 1%;
+    padding-right: 1%;
+    color: #3a3f47;
 }
 
 .btn-primary {
-    font-family: "Lucida Console", monospace;
-    font-size: 36px;
-    margin-top: 50px;
     left: 50%;
     position: relative;
     transform: translate(-50%, 0);
 }
 
-.learn-more {
-    background-color: #098fbb;
+#learn-more {
+    top: 5%;
+    background-color: #2ca6ce;
 }
 
-.play-now {
+#learn-more:hover, #learn-more:active {
+    background-color: #098ebb;
+}
+
+#play-now {
+    top: 5.2%;
     background-color: #ff9a2f;
     color: #3a3f47;
 }
 
-.play-now:hover {
+#play-now:hover, #play-now:active {
     background-color: #ff8403;
     color: black;
-}
-
-.play-now:active {
-    background-color: #ff8403;
 }

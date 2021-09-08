@@ -6,22 +6,20 @@ head
 	link(rel='stylesheet' type='text/css' href='index.css')
 body
 	nav.navbar.fixed-top.navbar-expand
-		a(href='/')
-			img.home-logo(src='assets/home-logo.png')
-		ul.navbar-nav.ml-auto
-			li.nav-item
-				a.nav-link(href='/rules') Rules
-			li.nav-item
-				a.nav-link(href='/login') Login
-			li.nav-item
-				a.last-link.nav-link(href='/register') Register
-	div.welcome.welcome-left
-		p.welcome-text.text-center
-			| Tandem chess is a co-operative chess variant played on two chessboards by four players in teams of two.
-			br
-			br
-			| Normal chess rules apply, except that captured pieces on one board are passed on to the teammate on the other board, who then has the option of putting these pieces on their board.
-		a.learn-more.btn.btn-primary.btn-lg(href='/rules', role='button') Learn more!
-	div.welcome.welcome-right
-		img.welcome-pic(src='assets/welcome-pic.png')
-		a.play-now.btn.btn-primary.btn-lg(href='/login', role='button') Play now!
+		.container-fluid
+			a.navbar-brand(href='/')
+				img(src='assets/logo.png')
+			ul.navbar-nav.ml-auto
+				li.nav-item
+					a.nav-link(href='/login') Login
+				li.nav-item
+					a.last-link.nav-link(href='/register') Register
+	.container-fluid
+		.row
+			#welcome.welcome-left.col-lg-6.col-md-12
+				p#welcome-text.text-center Tandem chess is a co-operative chess variant played on two chessboards by four players in teams of two.
+				p#basic-rules.text-center Normal chess rules apply, except that captured pieces on one board are passed on to the teammate on the other board, who then has the option of putting these pieces on their board.
+				a#learn-more.btn.btn-primary.btn-lg(role='button') Learn more
+			#welcome.welcome-right.col-lg-6.col-md-12
+				img#pieces.rounded.mx-auto.d-block(src='assets/pieces.png')
+				a#play-now.btn.btn-primary.btn-lg(href='/login', role='button') PLAY NOW!
