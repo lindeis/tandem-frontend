@@ -1,18 +1,34 @@
 window.onload = async function lobbyOnLoad() {
-	rooms = await getRooms();
-	tbody = document.getElementById("roomTableBody");
-	fillTable(tbody, rooms);
+	if (localStorage.getItem("tandem-token") === null) {
+		redirectToLogin();
+	}
+	response = await queryRooms();
+	if (response.ok) {
+		rooms = await parseRooms(response);
+		tbody = document.getElementById("roomTableBody");
+		fillTable(tbody, rooms);
+	} else {
+		redirectToLogin();
+	}
 }
 
-async function getRooms() {
+function redirectToLogin() {
+	location.href = "http://localhost:3000/login?redirectedFrom=lobby";
+}
+
+async function queryRooms() {
 	const response = await fetch("http://localhost:8080/lobby", {
 		method: 'GET',
 		headers: {
 			'tandem-token': localStorage.getItem("tandem-token"),
 			'Content-Type': 'application/json'
 	}});
-	const responseJson = await response.json();
-	return responseJson;
+	return response;
+}
+
+function parseRooms(reponse) {
+	const rooms = response.json();
+	return rooms;
 }
 
 function fillTable(tbody, rooms) {
@@ -41,6 +57,7 @@ function fillTable(tbody, rooms) {
 		createRoom(document.getElementById("createRoomNameField").value);
 	}
 	createRoomButtonCell.appendChild(button);
+	document.getElementById("roomTable").classList.remove("hidden");
 }
 
 async function joinRoom(roomName) {
@@ -51,7 +68,11 @@ async function joinRoom(roomName) {
 			'Content-Type': 'application/json'
 	}});
 	const responseJson = await response.json();
-	location.href = "http://localhost:3000/room?name=" + responseJson.roomName;
+	if (response.ok) {
+		location.href = "http://localhost:3000/room?name=" + responseJson.roomName;
+	} else {
+		document.getElementById("message").innerHTML = responseJson.message;
+	}
 }
 
 async function createRoom(roomName) {
@@ -62,5 +83,9 @@ async function createRoom(roomName) {
 			'Content-Type': 'application/json'
 	}});
 	const responseJson = await response.json();
-	location.href = "http://localhost:3000/room?name=" + responseJson.roomName;
+	if (response.ok) {
+		location.href = "http://localhost:3000/room?name=" + responseJson.roomName;
+	} else {
+		document.getElementById("message").innerHTML = responseJson.message;
+	}
 }
