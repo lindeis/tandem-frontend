@@ -19,7 +19,45 @@ body
 			#welcome.welcome-left.col-lg-6.col-md-12
 				p#welcome-text.text-center Tandem chess is a co-operative chess variant played on two chessboards by four players in teams of two.
 				p#basic-rules.text-center Normal chess rules apply, except that captured pieces on one board are passed on to the teammate on the other board, who then has the option of putting these pieces on their board.
-				a#learn-more.btn.btn-primary.btn-lg(role='button') Learn more
+				a#learn-more.btn.btn-primary.btn-sm(role='button' data-toggle='collapse' data-target='#rules' aria-expanded='false' aria-controls='rules') 
+					|Learn more	
+					img#collapseImg(src='assets/caret-down.svg')
+				.row
+					#rules.collapse.col-lg-12.col-md-12
+						#carousel.carousel(data-ride='carousel' data-interval='10000')
+							ol.carousel-indicators
+								li.active(data-target='#carousel' data-slide-to='0')
+								li(data-target='#carousel' data-slide-to='1')
+								li(data-target='#carousel' data-slide-to='2')
+							.carousel-inner
+								.carousel-item.active
+									dl
+										dt.slide-title.text-center MOVES
+										dd.slide-text.text-center On each player's turn, they may choose to either make a regular chess move OR place one of the pieces their partner has passed on the board.
+										hr
+										dd.slide-text.text-center Pawns can not be promoted. If they reach the last rank, they would count as a captured piece for the opponent.								
+								.carousel-item
+									dl
+										dt.slide-title.text-center CAPTURED PIECES
+										dd.slide-text.text-center Must be placed on an empty square.
+										hr
+										dd.slide-text.text-center Can not be placed to checkmate the opponent directly.
+										hr
+										dd.slide-text.text-center Pawns can not be placed on the first or eighth ranks.
+								.carousel-item
+									dl
+										dt.slide-title.text-center GAME OBJECTIVE
+										dd.slide-text.text-center The game ends when ANY player is checkmated or runs out of time on either board.
+										hr
+										dd.slide-text.text-center Keep in mind that a player is not checkmated if they have the potential to block a check by placing a piece there, even if they don't have a piece "in hand" yet.
+								a.carousel-control-prev.btn.btn-default(href='#carousel' role='button' data-slide='prev')
+									img(src='assets/caret-left-fill.svg')
+								a.carousel-control-next.btn.btn-default(href='#carousel' role='button' data-slide='next')
+									img(src='assets/caret-right-fill.svg')
 			#welcome.welcome-right.col-lg-6.col-md-12
 				img#pieces.rounded.mx-auto.d-block(src='assets/pieces.png')
 				a#play-now.btn.btn-primary.btn-lg(href='/login', role='button') PLAY NOW!
+
+script(src='https://code.jquery.com/jquery-3.3.1.slim.min.js')
+script(src='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js')
+script(src='learn-more.js')

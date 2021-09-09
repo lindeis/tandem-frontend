@@ -50,6 +50,14 @@ body {
 
 p {
     margin-bottom: 0;
+    padding-left: 1%;
+    padding-right: 1%;
+    color: #3a3f47;
+}
+
+hr {
+    width: 80%;
+    border-top: 1px solid #3a3f47;
 }
 
 .navbar {
@@ -85,16 +93,10 @@ p {
 
 #welcome-text {
     padding-top: 15%;
-    padding-left: 1%;
-    padding-right: 1%;
-    color: #3a3f47;
 }
 
 #basic-rules {
     padding-top: 5%;
-    padding-left: 1%;
-    padding-right: 1%;
-    color: #3a3f47;
 }
 
 .btn-primary {
@@ -121,4 +123,48 @@ p {
 #play-now:hover, #play-now:active {
     background-color: #ff8403;
     color: black;
+}
+
+#rules {
+    position: absolute;
+    top: 35vw;
+    background: transparent;
+}
+
+.carousel-indicators {
+    top: 13vw;
+}
+
+.slide-title {
+    padding-top: 1.5%;
+    padding-bottom: 2%;
+    font-size: 1.75vw;
+    color: #3a3f47;
+}
+
+.slide-text {
+    padding-left: 3.5%;
+    padding-right: 3.5%;
+    font-size: 1.15vw;
+    color: #3a3f47;
+}
+
+.carousel-control-prev, .carousel-control-next {
+    top: 7vw;
+    width: 2%;
+    height: 2%;
+}
+
+.btn-default:focus {
+    outline: none;
+    box-shadow: none;
+    opacity: .5;
+}
+
+.btn-default:hover {
+    opacity: .9;
+}
+
+.carousel .carousel-indicators li {
+    background-color: #098ebb;
 }
