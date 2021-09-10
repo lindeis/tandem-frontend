@@ -61,7 +61,7 @@ function fillTable(tbody, rooms) {
 }
 
 async function joinRoom(roomName) {
-	const response = await fetch("http://localhost:8080/lobby?join=" + roomName, {
+	const response = await fetch("http://localhost:8080/lobby/join?room=" + roomName, {
 		method: 'POST',
 		headers: {
 			'tandem-token': localStorage.getItem("tandem-token"),
@@ -76,7 +76,7 @@ async function joinRoom(roomName) {
 }
 
 async function createRoom(roomName) {
-	const response = await fetch("http://localhost:8080/lobby?create=" + roomName, {
+	const response = await fetch("http://localhost:8080/lobby/create?room=" + roomName, {
 		method: 'POST',
 		headers: {
 			'tandem-token': localStorage.getItem("tandem-token"),

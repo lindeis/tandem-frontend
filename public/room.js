@@ -8,7 +8,7 @@ window.onload = function roomOnLoad() {
 }
 
 async function leaveRoom() {
-	const response = await fetch("http://localhost:8080/lobby?leave=" + roomName, {
+	const response = await fetch("http://localhost:8080/lobby/leave?room=" + roomName, {
 		method: 'POST',
 		headers: {
 			'tandem-token': localStorage.getItem("tandem-token"),
