@@ -2,10 +2,10 @@ window.onload = async function lobbyOnLoad() {
 	if (localStorage.getItem("tandem-token") === null) {
 		redirectToLogin();
 	}
-	response = await queryRooms();
+	const response = await queryRooms();
 	if (response.ok) {
-		rooms = await parseRooms(response);
-		tbody = document.getElementById("roomTableBody");
+		const rooms = await parseRooms(response);
+		const tbody = document.getElementById("roomTableBody");
 		fillTable(tbody, rooms);
 	} else {
 		redirectToLogin();
@@ -26,31 +26,31 @@ async function queryRooms() {
 	return response;
 }
 
-function parseRooms(reponse) {
+function parseRooms(response) {
 	const rooms = response.json();
 	return rooms;
 }
 
 function fillTable(tbody, rooms) {
 	rooms.forEach(room => {
-		row = tbody.insertRow();
-		nameCell = row.insertCell();
+		const row = tbody.insertRow();
+		const nameCell = row.insertCell();
 		nameCell.innerHTML = room;
-		buttonCell = row.insertCell();
-		button = document.createElement("button");
+		const buttonCell = row.insertCell();
+		const button = document.createElement("button");
 		button.innerHTML = "Join";
 		button.className = "join-button";
 		button.onclick = function () { joinRoom(room); }
 		buttonCell.appendChild(button);
 	});
-	createRoomRow = tbody.insertRow();
-	createRoomNameCell = createRoomRow.insertCell();
-	textfield = document.createElement("input");
+	const createRoomRow = tbody.insertRow();
+	const createRoomNameCell = createRoomRow.insertCell();
+	const textfield = document.createElement("input");
 	textfield.type = "text";
 	textfield.id = "createRoomNameField";
 	createRoomNameCell.appendChild(textfield);
-	createRoomButtonCell = createRoomRow.insertCell();
-	button = document.createElement("button");
+	const createRoomButtonCell = createRoomRow.insertCell();
+	const button = document.createElement("button");
 	button.innerHTML = "Create";
 	button.className = "create-button";
 	button.onclick = function () { 
