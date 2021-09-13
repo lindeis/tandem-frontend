@@ -1,0 +1,17 @@
+.navbar {
+    background-color: #c04fe0;
+}
+
+.nav-link {
+    color: #3a3f47;
+    font-size: 1.5rem;
+    border-left: 1px solid #3a3f47;
+}
+
+.last-link.nav-link {
+    border-right: 1px solid #3a3f47;
+}
+
+.nav-link:hover {
+    color: black;
+}

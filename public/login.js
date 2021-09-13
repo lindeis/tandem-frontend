@@ -5,23 +5,35 @@ async function postLogin() {
 
     const response = await fetch('http://localhost:8080/login', {
         method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({'username': username.value, 'password': password.value})
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ 'username': username.value, 'password': password.value })
     })
 
     let responseObj = await response.json();
 
     if (response.status === 200) {
         localStorage.setItem('tandem-token', responseObj.token);
+        window.location.href = 'http://localhost:3000/lobby';
     }
 
     let error = document.getElementById('error');
+    error.style.color = 'red';
+    error.style.textAlign = 'center';
 
     if (response.status === 401) {
         error.innerText = 'Wrong username or password!';
     }
 
     if (response.status === 400) {
+        let required = document.getElementsByClassName('required')
+        for (let i = 0; i < required.length; i++) {
+            required[i].style.color = 'red';
+            required[i].innerText = ' *';
+        }
         error.innerText = 'Please fill in all the required fields!';
     }
 }
+
+let loginButton = document.getElementById('login');
+
+loginButton.addEventListener('click', postLogin)
