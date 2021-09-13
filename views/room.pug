@@ -3,4 +3,10 @@ head
 	script(src="room.js")
 body
 	h1#roomHeader
-	button#leaveButton(type="button", onClick="leaveRoom()") Leave
+	table#positionTable
+		thead
+			tr
+				th Position
+				th Player
+		tbody#positionTableBody
+	button#leaveButton(type="button", onClick="leaveRoom()") Leave Room
