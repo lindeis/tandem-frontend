@@ -7,13 +7,6 @@ async function register() {
 	if (!(pw1 === pw2)) {
 		errorMessage += "The passwords are not matching.\n";
 		error = true;
-	} else if (pw1.length < 3) {
-		errorMessage += "The password is too short.\n";
-		error = true;
-	}
-	if (username.length < 3) {
-		errorMessage += "The username is too short.\n";
-		error = true;
 	}
 
 	if (!error) {
