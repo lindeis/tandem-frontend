@@ -54,7 +54,6 @@ function parsePositions(response) {
 }
 
 function fillTable(tbody, players) {
-	console.log(players);
 	const rowWhite1 = tbody.insertRow();
 	const rowBlack1 = tbody.insertRow();
 	const rowWhite2 = tbody.insertRow();
