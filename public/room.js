@@ -11,20 +11,19 @@ window.onload = async function roomOnLoad() {
 		username = await getUsername();
 	}
 
-	const response = await queryRoom();
-	if (response.ok) {
-		const roomHeader = document.getElementById("roomHeader");
-		roomHeader.innerHTML = "Room " + roomName;
-		const roomInfo = await parsePositions(response);
-		const tbody = document.getElementById("positionTableBody");
-		fillTable(tbody, roomInfo.players);
-	} else {
-		redirectToLogin();
-	}
+	const roomInfo = await queryRoom();
+	const roomHeader = document.getElementById("roomHeader");
+	roomHeader.innerHTML = "Room " + roomName;
+	const tbody = document.getElementById("positionTableBody");
+	fillTable(tbody, roomInfo.players);
 }
 
 function redirectToLogin() {
 	location.href = "http://localhost:3000/login?redirectedFrom=room&name=" + roomName;
+}
+
+function redirectToLobby() {
+	location.href = "http://localhost:3000/lobby?redirectedFrom=invalidRoom";
 }
 
 async function getUsername() {
@@ -34,8 +33,12 @@ async function getUsername() {
 			'tandem-token': localStorage.getItem("tandem-token"),
 			'Content-Type': 'application/json'
 	}});
-	const userInfo = await response.json();
-	return userInfo.username;
+	if (response.ok) {
+		const userInfo = await response.json();
+		return userInfo.username;
+	} else {
+		redirectToLogin();
+	}	
 }
 
 async function queryRoom() {
@@ -45,16 +48,16 @@ async function queryRoom() {
 			'tandem-token': localStorage.getItem("tandem-token"),
 			'Content-Type': 'application/json'
 	}});
-	return response;
+	if (response.ok) {
+		const roomInfo = await response.json()
+		return roomInfo;
+	} else {
+		redirectToLobby();
+	}	
 }
 
-function parsePositions(response) {
-	const roomInfo = response.json();
-	return roomInfo;
-}
 
 function fillTable(tbody, players) {
-	console.log(players);
 	const rowWhite1 = tbody.insertRow();
 	const rowBlack1 = tbody.insertRow();
 	const rowWhite2 = tbody.insertRow();

@@ -36,4 +36,4 @@ async function postLogin() {
 
 let loginButton = document.getElementById('login');
 
-loginButton.addEventListener('click', postLogin)
+loginButton.addEventListener('click', postLogin);
