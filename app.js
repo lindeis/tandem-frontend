@@ -32,4 +32,7 @@ app.get('/room', function (req, res) {
 app.post('/login', function () {
 })
 
+app.post('/register', function () {
+})
+
 app.listen(PORT, () => console.log(`Server listening on port: ${PORT}`));

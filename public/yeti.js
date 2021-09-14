@@ -1,7 +1,7 @@
 var userLabel = document.querySelector('#usernameLabel'),
     username = document.querySelector('#username'),
     passwordLabel = document.querySelector('#passwordLabel'),
-    password = document.querySelector('#password'),
+    password = document.querySelectorAll('.pass'),
     showPasswordCheck = document.querySelector('#showPasswordCheck'),
     showPasswordToggle = document.querySelector('#showPasswordToggle'),
     mySVG = document.querySelector('.svgContainer'),
@@ -189,11 +189,15 @@ function onPasswordToggleMouseUp(e) {
 function onPasswordToggleChange(e) {
     setTimeout(function () {
         if (e.target.checked) {
-            password.type = "text";
+            password.forEach((node) => {
+                node.type = "text";
+            })
             spreadFingers();
 
         } else {
-            password.type = "password";
+            password.forEach((node) => {
+                node.type = "password";
+            })
             closeFingers();
         }
     }, 100);
@@ -304,8 +308,12 @@ function initLoginForm() {
     username.addEventListener('blur', onUsernameBlur);
     username.addEventListener('input', onUsernameInput);
     userLabel.addEventListener('click', onUsernameLabelClick);
-    password.addEventListener('focus', onPasswordFocus);
-    password.addEventListener('blur', onPasswordBlur);
+    
+    for (var i = 0; i < password.length; i++) {
+        password[i].addEventListener('focus', onPasswordFocus);
+        password[i].addEventListener('blur', onPasswordBlur);
+    }
+
     showPasswordCheck.addEventListener('change', onPasswordToggleChange);
     showPasswordCheck.addEventListener('focus', onPasswordToggleFocus);
     showPasswordCheck.addEventListener('blur', onPasswordToggleBlur);

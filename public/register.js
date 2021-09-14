@@ -1,39 +1,41 @@
 async function register() {
-	let error = false;
 	const username = document.getElementById("username").value;
-	const pw1 = document.getElementById("password1").value;
-	const pw2 = document.getElementById("password2").value;
-	let errorMessage = ""
-	if (!(pw1 === pw2)) {
-		errorMessage += "The passwords are not matching.\n";
-		error = true;
-	} else if (pw1.length < 3) {
-		errorMessage += "The password is too short.\n";
-		error = true;
-	}
-	if (username.length < 3) {
-		errorMessage += "The username is too short.\n";
-		error = true;
+	const pw1 = document.getElementById("password").value;
+	const pw2 = document.getElementById("confirmPassword").value;
+
+	let error = document.getElementById('error');
+	error.style.color = 'red';
+	error.style.textAlign = 'center';
+	if (pw1 !== pw2) {
+		error.innerText = "The passwords are not matching.";
+		return;
 	}
 
-	if (!error) {
-		const response = await fetch("http://localhost:8080/register", {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify({
-				'username': username,
-				'password': pw1
-			})
-		});
-		const responseJson = await response.json();
-		if (response.ok) {
-			errorMessage += "User " + responseJson.username + " was created successfully";
-		} else {
-			errorMessage += responseJson.message;
-		}
+	const response = await fetch("http://localhost:8080/register", {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify({
+			'username': username,
+			'password': pw1
+		})
+	})
+
+	const responseJson = await response.json();
+	if (response.ok) {
+		window.location.href = 'http://localhost:3000/login';
 	}
 
-	document.getElementById("message").innerHTML = errorMessage;
+	if (response.status === 422) {
+		error.innerText = responseJson.message;
+	}
+
+	if (response.status === 409) {
+		error.innerText = responseJson.message;
+	}
 }
+
+let registerButton = document.getElementById('register');
+
+registerButton.addEventListener('click', register)

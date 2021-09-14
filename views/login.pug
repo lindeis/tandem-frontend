@@ -4,7 +4,7 @@ head
 	link(rel='icon' href='assets/favicon.ico' type='image/x-icon')
 	link(rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css')
 	link(rel='stylesheet' type='text/css' href='navbar.css')
-	link(rel='stylesheet' type='text/css' href='login.css')
+	link(rel='stylesheet' type='text/css' href='yeti.css')
 body
 	nav.navbar.fixed-top.navbar-expand
 		.container-fluid
@@ -84,9 +84,9 @@ form(method='post')
 			a.required
 		input#username(type='text' maxlength='254' name='username')
 	.inputGroup.password
-		label#passwordLabel(for='loginPassword') Password
+		label#passwordLabel(for='password') Password
 			a.required
-		input#password(type='password' name='password')
+		input#password.pass(type='password' name='password')
 		label#showPasswordToggle(for='showPasswordCheck')
 			|Show
 			input#showPasswordCheck(type='checkbox')
@@ -94,6 +94,9 @@ form(method='post')
 		p#error
 	.inputGroup.login
 		button#login(type='submit') Log in
+	hr
+	p New player?
+		a(href='/register') Register
 
 script(src='https://cdn.bootcdn.net/ajax/libs/gsap/2.1.3/TweenMax.min.js')
 script(src='yeti.js')
