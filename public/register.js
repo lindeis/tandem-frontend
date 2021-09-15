@@ -24,7 +24,7 @@ async function register() {
 
 	const responseJson = await response.json();
 	if (response.ok) {
-		window.location.href = 'http://localhost:3000/login';
+		window.location.href = 'http://localhost:3000/login?redirectedFrom=register';
 	}
 
 	if (response.status === 422) {
