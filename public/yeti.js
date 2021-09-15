@@ -295,7 +295,9 @@ function getPosition(el) {
     };
 }
 
-function initLoginForm() {
+window.onload = function initLoginForm() {
+    document.getElementById('showPasswordCheck').checked = false;
+
     svgCoords = getPosition(mySVG);
     usernameCoords = getPosition(username);
     screenCenter = svgCoords.x + (mySVG.offsetWidth / 2);
