@@ -82,18 +82,18 @@ form(method='post')
 	.inputGroup.username
 		label#usernameLabel(for='username') Username
 			a.required
-		input#username(type='text' maxlength='254' name='username')
+		input#username(type='text' maxlength='254' name='username' spellcheck='false')
 	.inputGroup.password
 		label#passwordLabel(for='password') Password
 			a.required
-		input#password.pass(type='password' name='password')
+		input#password.pass(type='password' name='password' spellcheck='false')
 		label#showPasswordToggle(for='showPasswordCheck')
 			|Show
 			input#showPasswordCheck(type='checkbox')
 			.indicator
 		p#error
 	.inputGroup.login
-		button#login(type='submit') Log in
+		button#login(type='submit') Login
 	hr
 	p New player?
 		a(href='/register') Register
