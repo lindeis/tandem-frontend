@@ -1,9 +1,11 @@
+import {frontend, backend} from './host.js';
+
 async function postLogin() {
 
     let username = document.getElementById('username');
     let password = document.getElementById('password');
 
-    const response = await fetch('http://localhost:8080/login', {
+    const response = await fetch(backend("login"), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ 'username': username.value, 'password': password.value })
@@ -13,7 +15,7 @@ async function postLogin() {
 
     if (response.status === 200) {
         localStorage.setItem('tandem-token', responseObj.token);
-        window.location.href = 'http://localhost:3000/lobby';
+        window.location.href = frontend("lobby");
     }
 
     let error = document.getElementById('error');

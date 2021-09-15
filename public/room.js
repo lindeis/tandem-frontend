@@ -1,3 +1,5 @@
+import {frontend, backend} from './host.js';
+
 var roomName;
 var username;
 
@@ -8,26 +10,31 @@ window.onload = async function roomOnLoad() {
 	if (localStorage.getItem("tandem-token") === null) {
 		redirectToLogin();
 	} else {
+		document.getElementById("leaveButton").onclick = function() { leaveRoom(); };
 		username = await getUsername();
+		const roomInfo = await queryRoom();
+		const roomHeader = document.getElementById("roomHeader");
+		roomHeader.innerHTML = "Room " + roomName;
+		const tbody = document.getElementById("positionTableBody");
+		fillTable(tbody, roomInfo.players);
 	}
-
-	const roomInfo = await queryRoom();
-	const roomHeader = document.getElementById("roomHeader");
-	roomHeader.innerHTML = "Room " + roomName;
-	const tbody = document.getElementById("positionTableBody");
-	fillTable(tbody, roomInfo.players);
 }
 
 function redirectToLogin() {
-	location.href = "http://localhost:3000/login?redirectedFrom=room&name=" + roomName;
+	location.href = frontend("login", {
+		"redirectedFrom": "room",
+		"name": roomName
+	});
 }
 
 function redirectToLobby() {
-	location.href = "http://localhost:3000/lobby?redirectedFrom=invalidRoom";
+	location.href = frontend("lobby", {
+		"redirectedFrom": "invalidRoom"
+	});
 }
 
 async function getUsername() {
-	const response = await fetch("http://localhost:8080/user", {
+	const response = await fetch(backend("user"), {
 		method: 'GET',
 		headers: {
 			'tandem-token': localStorage.getItem("tandem-token"),
@@ -42,7 +49,7 @@ async function getUsername() {
 }
 
 async function queryRoom() {
-	const response = await fetch("http://localhost:8080/room?room=" + roomName, {
+	const response = await fetch(backend("room", {"room":roomName}), {
 		method: 'GET',
 		headers: {
 			'tandem-token': localStorage.getItem("tandem-token"),
@@ -91,18 +98,18 @@ function fillPlayer(row, position, players) {
 }
 
 async function leaveRoom() {
-	const response = await fetch("http://localhost:8080/lobby/leave?room=" + roomName, {
+	const response = await fetch(backend("lobby/leave", {"room":roomName}), {
 		method: 'POST',
 		headers: {
 			'tandem-token': localStorage.getItem("tandem-token"),
 			'Content-Type': 'application/json'
 	}});
 	const responseJson = await response.json();
-	location.href = "http://localhost:3000/lobby";
+	location.href = frontend("lobby");
 }
 
 async function sit(position, button) {
-	const response = await fetch("http://localhost:8080/room/sit?room=" + roomName + "&position=" + position, {
+	const response = await fetch(backend("room/sit", {"room":roomName, "position":position}), {
 		method: 'POST',
 		headers: {
 			'tandem-token': localStorage.getItem("tandem-token"),
@@ -117,7 +124,7 @@ async function sit(position, button) {
 }
 
 async function stand(position, button) {
-	const response = await fetch("http://localhost:8080/room/stand", {
+	const response = await fetch(backend("room/stand"), {
 		method: 'POST',
 		headers: {
 			'tandem-token': localStorage.getItem("tandem-token"),

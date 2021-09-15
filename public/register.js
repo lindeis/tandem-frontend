@@ -1,3 +1,5 @@
+import {frontend, backend} from './host.js';
+
 async function register() {
 	const username = document.getElementById("username").value;
 	const pw1 = document.getElementById("password").value;
@@ -11,7 +13,7 @@ async function register() {
 		return;
 	}
 
-	const response = await fetch("http://localhost:8080/register", {
+	const response = await fetch(backend("register"), {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json'
@@ -24,7 +26,7 @@ async function register() {
 
 	const responseJson = await response.json();
 	if (response.ok) {
-		window.location.href = 'http://localhost:3000/login';
+		window.location.href = frontend("login");
 	}
 
 	if (response.status === 422) {
