@@ -1,6 +1,6 @@
 doctype html
 head
-	script(src="room.js")
+	script(type="module", src="room.js")
 body
 	h1#roomHeader
 	table#positionTable
@@ -9,4 +9,4 @@ body
 				th Position
 				th Player
 		tbody#positionTableBody
-	button#leaveButton(type="button", onClick="leaveRoom()") Leave Room
+	button#leaveButton(type="button") Leave Room

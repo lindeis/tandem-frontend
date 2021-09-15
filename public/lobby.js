@@ -1,67 +1,62 @@
+import {frontend, backend} from './host.js';
+
 window.onload = async function lobbyOnLoad() {
 	if (localStorage.getItem("tandem-token") === null) {
 		redirectToLogin();
 	}
-	const response = await queryRooms();
-	if (response.ok) {
-		const rooms = await parseRooms(response);
-		const tbody = document.getElementById("roomTableBody");
-		fillTable(tbody, rooms);
-	} else {
-		redirectToLogin();
-	}
+	const rooms = await queryRooms();
+	const tbody = document.getElementById("roomTableBody");
+	fillTable(tbody, rooms);
 }
 
 function redirectToLogin() {
-	location.href = "http://localhost:3000/login?redirectedFrom=lobby";
+	location.href = frontend("login", {"redirectedFrom":"lobby"});
 }
 
 async function queryRooms() {
-	const response = await fetch("http://localhost:8080/lobby", {
+	const response = await fetch(backend("lobby"), {
 		method: 'GET',
 		headers: {
 			'tandem-token': localStorage.getItem("tandem-token"),
 			'Content-Type': 'application/json'
 	}});
-	return response;
-}
-
-function parseRooms(response) {
-	const rooms = response.json();
-	return rooms;
+	if (response.ok) {
+		const rooms = await response.json();
+		return rooms;
+	} else {
+		// TODO
+	}
 }
 
 function fillTable(tbody, rooms) {
 	rooms.forEach(room => {
 		const row = tbody.insertRow();
-		const nameCell = row.insertCell();
-		nameCell.innerHTML = room;
-		const buttonCell = row.insertCell();
+		row.insertCell().innerHTML = room.roomName;
+		row.insertCell().innerHTML = room.playerCount + "/4";
+		row.insertCell().innerHTML = room.spectatorCount;
 		const button = document.createElement("button");
 		button.innerHTML = "Join";
 		button.className = "join-button";
-		button.onclick = function () { joinRoom(room); }
-		buttonCell.appendChild(button);
+		button.onclick = function () { joinRoom(room.roomName); }
+		row.insertCell().appendChild(button);
 	});
 	const createRoomRow = tbody.insertRow();
-	const createRoomNameCell = createRoomRow.insertCell();
 	const textfield = document.createElement("input");
 	textfield.type = "text";
 	textfield.id = "createRoomNameField";
-	createRoomNameCell.appendChild(textfield);
-	const createRoomButtonCell = createRoomRow.insertCell();
+	createRoomRow.insertCell().appendChild(textfield);
 	const button = document.createElement("button");
 	button.innerHTML = "Create";
 	button.className = "create-button";
 	button.onclick = function () { 
 		createRoom(document.getElementById("createRoomNameField").value);
 	}
-	createRoomButtonCell.appendChild(button);
+	createRoomRow.insertCell().appendChild(button);
 	document.getElementById("roomTable").classList.remove("hidden");
 }
 
 async function joinRoom(roomName) {
-	const response = await fetch("http://localhost:8080/lobby/join?room=" + roomName, {
+	const response = await fetch(backend("lobby/join", {"room":roomName}), {
 		method: 'POST',
 		headers: {
 			'tandem-token': localStorage.getItem("tandem-token"),
@@ -69,14 +64,14 @@ async function joinRoom(roomName) {
 	}});
 	const responseJson = await response.json();
 	if (response.ok) {
-		location.href = "http://localhost:3000/room?name=" + responseJson.roomName;
+		location.href = frontend("room", {"name":responseJson.roomName});
 	} else {
 		document.getElementById("message").innerHTML = responseJson.message;
 	}
 }
 
 async function createRoom(roomName) {
-	const response = await fetch("http://localhost:8080/lobby/create?room=" + roomName, {
+	const response = await fetch(backend("lobby/create", {"room":roomName}), {
 		method: 'POST',
 		headers: {
 			'tandem-token': localStorage.getItem("tandem-token"),
@@ -84,7 +79,7 @@ async function createRoom(roomName) {
 	}});
 	const responseJson = await response.json();
 	if (response.ok) {
-		location.href = "http://localhost:3000/room?name=" + responseJson.roomName;
+		location.href = frontend("room", {"name":responseJson.roomName});
 	} else {
 		document.getElementById("message").innerHTML = responseJson.message;
 	}
