@@ -12,15 +12,6 @@ body {
     background: linear-gradient(to bottom, #098ebb 0%,#ff8403 100%);
 }
 
-p {
-    padding-top: 5%;
-    text-align: center;
-}
-
-a {
-    padding-left: 2%;
-}
-
 .navbar {
     background-color: transparent;
 }
@@ -169,4 +160,13 @@ form .password #showPasswordToggle input:checked ~ .indicator:after {
 
 form .password #showPasswordToggle input:focus ~ .indicator, form .password #showPasswordToggle input:hover ~ .indicator {
     border-color: #4eb8dd;
+}
+
+.q, #error {
+    padding-top: 5%;
+    text-align: center;
+}
+
+.inputBtn {
+    padding-left: 2%;
 }
