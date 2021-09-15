@@ -331,5 +331,3 @@ window.onload = function initLoginForm() {
 
     usernameScrollMax = username.scrollWidth;
 }
-
-initLoginForm();
