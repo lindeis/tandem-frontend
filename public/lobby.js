@@ -2,14 +2,9 @@ window.onload = async function lobbyOnLoad() {
 	if (localStorage.getItem("tandem-token") === null) {
 		redirectToLogin();
 	}
-	const response = await queryRooms();
-	if (response.ok) {
-		const rooms = await parseRooms(response);
-		const tbody = document.getElementById("roomTableBody");
-		fillTable(tbody, rooms);
-	} else {
-		redirectToLogin();
-	}
+	const rooms = await queryRooms();
+	const tbody = document.getElementById("roomTableBody");
+	fillTable(tbody, rooms);
 }
 
 function redirectToLogin() {
@@ -23,40 +18,38 @@ async function queryRooms() {
 			'tandem-token': localStorage.getItem("tandem-token"),
 			'Content-Type': 'application/json'
 	}});
-	return response;
-}
-
-function parseRooms(response) {
-	const rooms = response.json();
-	return rooms;
+	if (response.ok) {
+		const rooms = await response.json();
+		return rooms;
+	} else {
+		// TODO
+	}
 }
 
 function fillTable(tbody, rooms) {
 	rooms.forEach(room => {
 		const row = tbody.insertRow();
-		const nameCell = row.insertCell();
-		nameCell.innerHTML = room;
-		const buttonCell = row.insertCell();
+		row.insertCell().innerHTML = room.roomName;
+		row.insertCell().innerHTML = room.playerCount + "/4";
+		row.insertCell().innerHTML = room.spectatorCount;
 		const button = document.createElement("button");
 		button.innerHTML = "Join";
 		button.className = "join-button";
-		button.onclick = function () { joinRoom(room); }
-		buttonCell.appendChild(button);
+		button.onclick = function () { joinRoom(room.roomName); }
+		row.insertCell().appendChild(button);
 	});
 	const createRoomRow = tbody.insertRow();
-	const createRoomNameCell = createRoomRow.insertCell();
 	const textfield = document.createElement("input");
 	textfield.type = "text";
 	textfield.id = "createRoomNameField";
-	createRoomNameCell.appendChild(textfield);
-	const createRoomButtonCell = createRoomRow.insertCell();
+	createRoomRow.insertCell().appendChild(textfield);
 	const button = document.createElement("button");
 	button.innerHTML = "Create";
 	button.className = "create-button";
 	button.onclick = function () { 
 		createRoom(document.getElementById("createRoomNameField").value);
 	}
-	createRoomButtonCell.appendChild(button);
+	createRoomRow.insertCell().appendChild(button);
 	document.getElementById("roomTable").classList.remove("hidden");
 }
 
