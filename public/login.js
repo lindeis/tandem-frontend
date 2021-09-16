@@ -5,6 +5,8 @@ async function postLogin() {
     let username = document.getElementById('username');
     let password = document.getElementById('password');
 
+    event.preventDefault(); // Prevents the submit button from reloading the page and possibly iterrupting the fetch
+
     const response = await fetch(backend("login"), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

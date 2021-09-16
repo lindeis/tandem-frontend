@@ -13,6 +13,8 @@ async function register() {
 		return;
 	}
 
+	event.preventDefault();	// Prevents the submit button from reloading the page and possibly iterrupting the fetch
+
 	const response = await fetch(backend("register"), {
 		method: 'POST',
 		headers: {
