@@ -119,7 +119,8 @@ async function sit(position, button) {
 		button.innerHTML = "Stand";
 		button.onclick = function() { stand(position, button); }
 	} else {
-		// TODO
+		const responseJson = await response.json();
+		document.getElementById("message").innerHTML = responseJson.message;
 	}
 }
 
@@ -134,6 +135,7 @@ async function stand(position, button) {
 		button.innerHTML = "Sit";
 		button.onclick = function() { sit(position, button); }
 	} else {
-		// TODO
+		const responseJson = await response.json();
+		document.getElementById("message").innerHTML = responseJson.message;
 	}
 }
