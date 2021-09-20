@@ -1,19 +1,21 @@
 import { userLabel, username, passwordLabel, password } from './yeti.js';
 
 let required = document.createElement('a');
-required.style.fontSize = '0.75em';
+required.style.fontSize = '0.8em';
 required.style.color = 'red';
 required.style.paddingLeft = '10px';
 required.innerHTML = 'Required';
 let usernameRequired = required.cloneNode(true);
 let passwordRequired = required.cloneNode(true);
 
-let alert = document.createElement('img');
-alert.src = 'assets/exclamation-triangle-fill.svg';
-alert.style.paddingLeft = '10px';
-alert.style.paddingBottom = '3px';
-let usernameAlert = alert.cloneNode(true);
-let passwordAlert = alert.cloneNode(true);
+let img = document.createElement('img');
+img.src = 'assets/exclamation-triangle-fill.svg';
+img.setAttribute('width', '24');
+img.setAttribute('height', '24');
+img.style.paddingLeft = '10px';
+img.style.paddingBottom = '0.5%';
+let usernameAlert = img.cloneNode(true);
+let passwordAlert = img.cloneNode(true);
 
 let usernameAlertVisible = false;
 let passwordAlertVisible = false;

@@ -1,4 +1,5 @@
-import {frontend, backend} from './host.js';
+import { frontend, backend } from './host.js';
+import { alert, img, message } from './alert.js';
 
 async function postLogin() {
 
@@ -13,28 +14,24 @@ async function postLogin() {
         body: JSON.stringify({ 'username': username.value, 'password': password.value })
     })
 
-    let responseObj = await response.json();
+    let responseJson = await response.json();
+
+    alert.classList.add('alert-danger');
+    img.src = 'assets/exclamation-triangle-fill.svg';
+    message.innerHTML = responseJson.message;
 
     if (response.status === 200) {
-        localStorage.setItem('tandem-token', responseObj.token);
+        document.body.removeChild(alert);
+        localStorage.setItem('tandem-token', responseJson.token);
         window.location.href = frontend("lobby");
     }
 
-    let error = document.getElementById('error');
-    error.style.color = 'red';
-    error.style.textAlign = 'center';
-
     if (response.status === 401) {
-        error.innerText = 'Wrong username or password!';
+        document.body.appendChild(alert);
     }
 
     if (response.status === 400) {
-        let required = document.getElementsByClassName('required')
-        for (let i = 0; i < required.length; i++) {
-            required[i].style.color = 'red';
-            required[i].innerText = ' *';
-        }
-        error.innerText = 'Please fill in all the required fields!';
+        document.body.appendChild(alert);
     }
 }
 
