@@ -22,7 +22,7 @@ var userLabel = document.querySelector('#usernameLabel'),
     earHairR = document.querySelector('.earR .earHair'),
     hair = document.querySelector('.hair');
 var activeElement, curUsernameIndex, screenCenter, svgCoords, usernameCoords, usernameScrollMax, chinMin = .5, dFromC, blinking, eyeScale = 1, eyesCovered = false, showPasswordClicked = false;
-var eyeLCoords, eyeRCoords, noseCoords, eyeLAngle, eyeLX, eyeLY, eyeRAngle, eyeRX, eyeRY, noseAngle, noseX, noseY, mouthX, mouthY, mouthR, chinX, chinY, chinS, faceX, faceY, faceSkew, eyebrowSkew, outerEarX, outerEarY, hairX, hairS;
+var eyeLCoords, eyeRCoords, noseCoords, mouthCoords, eyeLAngle, eyeLX, eyeLY, eyeRAngle, eyeRX, eyeRY, noseAngle, noseX, noseY, mouthAngle, mouthX, mouthY, mouthR, chinX, chinY, chinS, faceX, faceY, faceSkew, eyebrowSkew, outerEarX, outerEarY, hairX, hairS;
 
 function calculateFaceMove(e) {
     var
@@ -310,7 +310,7 @@ window.onload = function initLoginForm() {
     username.addEventListener('blur', onUsernameBlur);
     username.addEventListener('input', onUsernameInput);
     userLabel.addEventListener('click', onUsernameLabelClick);
-    
+
     for (var i = 0; i < password.length; i++) {
         password[i].addEventListener('focus', onPasswordFocus);
         password[i].addEventListener('blur', onPasswordBlur);
@@ -331,3 +331,5 @@ window.onload = function initLoginForm() {
 
     usernameScrollMax = username.scrollWidth;
 }
+
+export { userLabel, username, passwordLabel, password };
