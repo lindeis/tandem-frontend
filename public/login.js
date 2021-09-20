@@ -18,7 +18,6 @@ async function postLogin() {
 
     alert.classList.add('alert-danger');
     img.src = 'assets/exclamation-triangle-fill.svg';
-    message.innerHTML = responseJson.message;
 
     if (response.status === 200) {
         document.body.removeChild(alert);
@@ -27,10 +26,12 @@ async function postLogin() {
     }
 
     if (response.status === 401) {
+        message.innerHTML = "Wrong username or password!";
         document.body.appendChild(alert);
     }
 
     if (response.status === 400) {
+        message.innerHTML = "Fill all fields!";
         document.body.appendChild(alert);
     }
 }
