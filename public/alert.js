@@ -3,9 +3,11 @@ function successfulRegistration() {
     alert.classList.add('alert');
     alert.classList.add('alert-success');
     alert.classList.add('d-flex');
-    alert.classList.add('align-items-center');
     alert.setAttribute('role', 'alert');
-    alert.style.marginTop = '3%';
+    alert.style.marginTop = '10vh';
+    alert.style.marginLeft = '50%';
+    alert.style.transform = 'translate(-50%, -50%)';
+    alert.style.width = '400px';
     document.body.appendChild(alert);
 
     let img = document.createElement('img');
@@ -13,7 +15,7 @@ function successfulRegistration() {
     alert.appendChild(img);
     
     let message = document.createElement('div');
-    message.style.paddingLeft = '1%';
+    message.style.paddingLeft = '3%';
     message.innerHTML = 'Registration successful! You can now login.';
     alert.appendChild(message);
 }
