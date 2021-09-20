@@ -31,13 +31,7 @@ async function register() {
 		window.location.href = frontend("login", {
 			"redirectedFrom": "register"
 		});
-	}
-
-	if (response.status === 422) {
-		error.innerText = responseJson.message;
-	}
-
-	if (response.status === 409) {
+	} else {
 		error.innerText = responseJson.message;
 	}
 }
