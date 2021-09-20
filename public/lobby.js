@@ -71,12 +71,16 @@ async function joinRoom(roomName) {
 }
 
 async function createRoom(roomName) {
-	const response = await fetch(backend("lobby/create", {"room":roomName}), {
+	const response = await fetch(backend("lobby/create"), {
 		method: 'POST',
 		headers: {
 			'tandem-token': localStorage.getItem("tandem-token"),
 			'Content-Type': 'application/json'
-	}});
+		},
+		body: JSON.stringify({
+			'name': roomName
+		})
+	});
 	const responseJson = await response.json();
 	if (response.ok) {
 		location.href = frontend("room", {"name":responseJson.roomName});
