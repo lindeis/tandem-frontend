@@ -1,9 +1,12 @@
 import {frontend, backend} from './host.js';
 
+var message;
+
 window.onload = async function lobbyOnLoad() {
 	if (localStorage.getItem("tandem-token") === null) {
 		redirectToLogin();
 	}
+	message = document.getElementById("message");
 	const rooms = await queryRooms();
 	const tbody = document.getElementById("roomTableBody");
 	fillTable(tbody, rooms);
@@ -67,12 +70,12 @@ async function joinRoom(roomName) {
 	if (response.ok) {
 		location.href = frontend("room", {"name":responseJson.roomName});
 	} else {
-		document.getElementById("message").innerHTML = responseJson.message;
+		message.innerHTML = responseJson.message;
 	}
 }
 
 async function createRoom(roomName) {
-	document.getElementById("message").innerHTML = "";
+	message.innerHTML = "";
 	if (isRoomNameValid(roomName)) {
 		const response = await fetch(backend("lobby/create"), {
 			method: 'POST',
@@ -88,19 +91,19 @@ async function createRoom(roomName) {
 		if (response.ok) {
 			location.href = frontend("room", {"name":responseJson.roomName});
 		} else {
-			document.getElementById("message").innerHTML = responseJson.message;
+			message.innerHTML = responseJson.message;
 		}
 	}
 }
 
 function isRoomNameValid(roomName) {
 	if (roomName.length < 3 || roomName.length > 255) {
-		document.getElementById("message").innerHTML = "The room name has to be between 3 and 255 characters long.";
+		message.innerHTML = "The room name has to be between 3 and 255 characters long.";
 		return false;
 	}
 	const regex = /^[a-zA-Z0-9._]+$/
 	if (!regex.test(roomName)) {
-		document.getElementById("message").innerHTML = "The room name can only contain letters, numbers, underscores and periods";
+		message.innerHTML = "The room name can only contain letters, numbers, underscores and periods";
 		return false;
 	}
 	return true;
