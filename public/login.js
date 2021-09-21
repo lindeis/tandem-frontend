@@ -20,7 +20,6 @@ async function postLogin() {
     img.src = 'assets/exclamation-triangle-fill.svg';
 
     if (response.status === 200) {
-        document.body.removeChild(alert);
         localStorage.setItem('tandem-token', responseJson.token);
         window.location.href = frontend("lobby");
     }
