@@ -1,7 +1,7 @@
 var userLabel = document.querySelector('#usernameLabel'),
     username = document.querySelector('#username'),
     passwordLabel = document.querySelector('#passwordLabel'),
-    password = document.querySelectorAll('.pass'),
+    password = document.querySelector('#password'),
     showPasswordCheck = document.querySelector('#showPasswordCheck'),
     showPasswordToggle = document.querySelector('#showPasswordToggle'),
     mySVG = document.querySelector('.svgContainer'),
@@ -12,7 +12,6 @@ var userLabel = document.querySelector('#usernameLabel'),
     eyeR = document.querySelector('.eyeR'),
     nose = document.querySelector('.nose'),
     mouth = document.querySelector('.mouth'),
-    mouthOutline = document.querySelector('.mouthOutline'),
     chin = document.querySelector('.chin'),
     face = document.querySelector('.face'),
     eyebrow = document.querySelector('.eyebrow'),
@@ -24,7 +23,7 @@ var userLabel = document.querySelector('#usernameLabel'),
 var activeElement, curUsernameIndex, screenCenter, svgCoords, usernameCoords, usernameScrollMax, chinMin = .5, dFromC, blinking, eyeScale = 1, eyesCovered = false, showPasswordClicked = false;
 var eyeLCoords, eyeRCoords, noseCoords, mouthCoords, eyeLAngle, eyeLX, eyeLY, eyeRAngle, eyeRX, eyeRY, noseAngle, noseX, noseY, mouthAngle, mouthX, mouthY, mouthR, chinX, chinY, chinS, faceX, faceY, faceSkew, eyebrowSkew, outerEarX, outerEarY, hairX, hairS;
 
-function calculateFaceMove(e) {
+function calculateFaceMove() {
     var
         carPos = username.selectionEnd,
         div = document.createElement('div'),
@@ -138,18 +137,18 @@ function onUsernameBlur(e) {
     }, 100);
 }
 
-function onUsernameLabelClick(e) {
+function onUsernameLabelClick() {
     activeElement = "username";
 }
 
-function onPasswordFocus(e) {
+function onPasswordFocus() {
     activeElement = "password";
     if (!eyesCovered) {
         coverEyes();
     }
 }
 
-function onPasswordBlur(e) {
+function onPasswordBlur() {
     activeElement = null;
     setTimeout(function () {
         if (activeElement == "toggle" || activeElement == "password") {
@@ -159,14 +158,14 @@ function onPasswordBlur(e) {
     }, 200);
 }
 
-function onPasswordToggleFocus(e) {
+function onPasswordToggleFocus() {
     activeElement = "toggle";
     if (!eyesCovered) {
         coverEyes();
     }
 }
 
-function onPasswordToggleBlur(e) {
+function onPasswordToggleBlur() {
     activeElement = null;
     if (!showPasswordClicked) {
         setTimeout(function () {
@@ -178,26 +177,21 @@ function onPasswordToggleBlur(e) {
     }
 }
 
-function onPasswordToggleMouseDown(e) {
+function onPasswordToggleMouseDown() {
     showPasswordClicked = true;
 }
 
-function onPasswordToggleMouseUp(e) {
+function onPasswordToggleMouseUp() {
     showPasswordClicked = false;
 }
 
-function onPasswordToggleChange(e) {
+function onPasswordToggleChange(e, password) {
     setTimeout(function () {
         if (e.target.checked) {
-            password.forEach((node) => {
-                node.type = "text";
-            })
+           password.type = 'text';
             spreadFingers();
-
         } else {
-            password.forEach((node) => {
-                node.type = "password";
-            })
+            password.type = 'password';
             closeFingers();
         }
     }, 100);
@@ -310,13 +304,9 @@ window.onload = function initLoginForm() {
     username.addEventListener('blur', onUsernameBlur);
     username.addEventListener('input', onUsernameInput);
     userLabel.addEventListener('click', onUsernameLabelClick);
-
-    for (var i = 0; i < password.length; i++) {
-        password[i].addEventListener('focus', onPasswordFocus);
-        password[i].addEventListener('blur', onPasswordBlur);
-    }
-
-    showPasswordCheck.addEventListener('change', onPasswordToggleChange);
+    password.addEventListener('focus', onPasswordFocus);
+    password.addEventListener('blur', onPasswordBlur);
+    showPasswordCheck.addEventListener('change', function() {onPasswordToggleChange(event, password);});
     showPasswordCheck.addEventListener('focus', onPasswordToggleFocus);
     showPasswordCheck.addEventListener('blur', onPasswordToggleBlur);
     showPasswordCheck.addEventListener('click', onPasswordToggleClick);
@@ -332,4 +322,4 @@ window.onload = function initLoginForm() {
     usernameScrollMax = username.scrollWidth;
 }
 
-export { userLabel, username, passwordLabel, password };
+export { userLabel, username, passwordLabel, password, showPasswordCheck, onPasswordFocus, onPasswordBlur, onPasswordToggleChange };

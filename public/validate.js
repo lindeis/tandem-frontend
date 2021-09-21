@@ -14,8 +14,8 @@ img.setAttribute('width', '24');
 img.setAttribute('height', '24');
 img.style.paddingLeft = '10px';
 img.style.paddingBottom = '0.5%';
-let usernameAlert = img.cloneNode(true);
-let passwordAlert = img.cloneNode(true);
+let usernameAlert = img.cloneNode();
+let passwordAlert = img.cloneNode();
 
 let usernameAlertVisible = false;
 let passwordAlertVisible = false;
@@ -37,7 +37,7 @@ function removeUsernameAlert() {
 }
 
 function appendPasswordAlert() {
-    if (password[0].value == '') {
+    if (password.value == '') {
         passwordLabel.appendChild(passwordAlert);
         passwordLabel.appendChild(passwordRequired);
         passwordAlertVisible = true;
@@ -54,5 +54,5 @@ function removePasswordAlert() {
 
 username.addEventListener('blur', appendUsernameAlert);
 username.addEventListener('input', removeUsernameAlert);
-password[0].addEventListener('blur', appendPasswordAlert);
-password[0].addEventListener('input', removePasswordAlert);
+password.addEventListener('blur', appendPasswordAlert);
+password.addEventListener('input', removePasswordAlert);

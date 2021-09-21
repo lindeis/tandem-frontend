@@ -31,7 +31,7 @@ async function postLogin() {
     }
 
     if (response.status === 400) {
-        message.innerHTML = "Fill all fields!";
+        message.innerHTML = "Please fill in all fields!";
         document.body.appendChild(alert);
     }
 }
