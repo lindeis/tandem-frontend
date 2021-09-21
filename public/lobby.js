@@ -44,6 +44,7 @@ function fillTable(tbody, rooms) {
 	const textfield = document.createElement("input");
 	textfield.type = "text";
 	textfield.id = "createRoomNameField";
+	textfield.setAttribute("maxlength", 255);
 	createRoomRow.insertCell().appendChild(textfield);
 	const button = document.createElement("button");
 	button.innerHTML = "Create";
@@ -71,20 +72,36 @@ async function joinRoom(roomName) {
 }
 
 async function createRoom(roomName) {
-	const response = await fetch(backend("lobby/create"), {
-		method: 'POST',
-		headers: {
-			'tandem-token': localStorage.getItem("tandem-token"),
-			'Content-Type': 'application/json'
-		},
-		body: JSON.stringify({
-			'name': roomName
-		})
-	});
-	const responseJson = await response.json();
-	if (response.ok) {
-		location.href = frontend("room", {"name":responseJson.roomName});
-	} else {
-		document.getElementById("message").innerHTML = responseJson.message;
+	document.getElementById("message").innerHTML = "";
+	if (isRoomNameValid(roomName)) {
+		const response = await fetch(backend("lobby/create"), {
+			method: 'POST',
+			headers: {
+				'tandem-token': localStorage.getItem("tandem-token"),
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({
+				'name': roomName
+			})
+		});
+		const responseJson = await response.json();
+		if (response.ok) {
+			location.href = frontend("room", {"name":responseJson.roomName});
+		} else {
+			document.getElementById("message").innerHTML = responseJson.message;
+		}
 	}
+}
+
+function isRoomNameValid(roomName) {
+	if (roomName.length < 3 || roomName.length > 255) {
+		document.getElementById("message").innerHTML = "The room name has to be between 3 and 255 characters long.";
+		return false;
+	}
+	const regex = /^[a-zA-Z0-9._]+$/
+	if (!regex.test(roomName)) {
+		document.getElementById("message").innerHTML = "The room name can only contain letters, numbers, underscores and periods";
+		return false;
+	}
+	return true;
 }
