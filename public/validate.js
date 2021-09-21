@@ -56,3 +56,5 @@ username.addEventListener('blur', appendUsernameAlert);
 username.addEventListener('input', removeUsernameAlert);
 password.addEventListener('blur', appendPasswordAlert);
 password.addEventListener('input', removePasswordAlert);
+
+export { required, img };
