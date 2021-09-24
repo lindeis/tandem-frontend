@@ -1,4 +1,4 @@
-import { userLabel, username, passwordLabel, password } from './yeti.js';
+import { userLabel, username, passwordLabel, password, initLoginForm } from './yeti.js';
 
 let message = document.createElement('a');
 message.style.fontSize = '0.8em';
@@ -18,42 +18,42 @@ img.style.paddingBottom = '0.5%';
 let usernameAlert = img.cloneNode();
 let passwordAlert = img.cloneNode();
 
-function appendAlert(label, alert, error) {
+function appendError(label, alert, error) {
     label.appendChild(alert);
     label.appendChild(error);
 }
 
-function removeAlert(label, alert, error) {
+function removeError(label, alert, error) {
     if (error.parentElement === label) {
         label.removeChild(alert);
         label.removeChild(error);
     }
-
 }
 
-function appendUsernameAlert() {
+function updateUsernameError() {
+    removeError(userLabel, usernameAlert, usernameRequired);
     if (username.value == '') {
-        appendAlert(userLabel, usernameAlert, usernameRequired);
+        appendError(userLabel, usernameAlert, usernameRequired);
     }
 }
 
-function removeUsernameAlert() {
-    removeAlert(userLabel, usernameAlert, usernameRequired);
-}
-
-function appendPasswordAlert() {
+function updatePasswordError() {
+    removeError(passwordLabel, passwordAlert, passwordRequired);
     if (password.value == '') {
-        appendAlert(passwordLabel, passwordAlert, passwordRequired);
+        appendError(passwordLabel, passwordAlert, passwordRequired);
     }
 }
 
-function removePasswordAlert() {
-    removeAlert(passwordLabel, passwordAlert, passwordRequired);
+function validateLogin() {
+    username.addEventListener('blur', updateUsernameError);
+    username.addEventListener('input', updateUsernameError);
+    password.addEventListener('blur', updatePasswordError);
+    password.addEventListener('input', updatePasswordError);
 }
 
-username.addEventListener('blur', appendUsernameAlert);
-username.addEventListener('input', removeUsernameAlert);
-password.addEventListener('blur', appendPasswordAlert);
-password.addEventListener('input', removePasswordAlert);
+window.onload = function () {
+    initLoginForm();
+    validateLogin();
+};
 
-export { message, img, usernameAlert, passwordAlert, appendAlert, removeAlert };
+export { message, img, usernameRequired, passwordRequired, usernameAlert, passwordAlert, appendError, removeError };

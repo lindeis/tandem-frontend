@@ -188,7 +188,7 @@ function onPasswordToggleMouseUp() {
 function onPasswordToggleChange(e, password) {
     setTimeout(function () {
         if (e.target.checked) {
-           password.type = 'text';
+            password.type = 'text';
             spreadFingers();
         } else {
             password.type = 'password';
@@ -289,7 +289,7 @@ function getPosition(el) {
     };
 }
 
-window.onload = function initLoginForm() {
+function initLoginForm() {
     document.getElementById('showPasswordCheck').checked = false;
 
     svgCoords = getPosition(mySVG);
@@ -306,7 +306,7 @@ window.onload = function initLoginForm() {
     userLabel.addEventListener('click', onUsernameLabelClick);
     password.addEventListener('focus', onPasswordFocus);
     password.addEventListener('blur', onPasswordBlur);
-    showPasswordCheck.addEventListener('change', function() {onPasswordToggleChange(event, password);});
+    showPasswordCheck.addEventListener('change', function () { onPasswordToggleChange(event, password); });
     showPasswordCheck.addEventListener('focus', onPasswordToggleFocus);
     showPasswordCheck.addEventListener('blur', onPasswordToggleBlur);
     showPasswordCheck.addEventListener('click', onPasswordToggleClick);
@@ -322,4 +322,6 @@ window.onload = function initLoginForm() {
     usernameScrollMax = username.scrollWidth;
 }
 
-export { userLabel, username, passwordLabel, password, showPasswordCheck, onPasswordFocus, onPasswordBlur, onPasswordToggleChange };
+window.onload = initLoginForm;
+
+export { userLabel, username, passwordLabel, password, showPasswordCheck, onPasswordFocus, onPasswordBlur, onPasswordToggleChange, initLoginForm };

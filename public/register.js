@@ -38,4 +38,4 @@ async function register() {
 
 let registerButton = document.getElementById('register');
 
-registerButton.addEventListener('click', register)
+registerButton.addEventListener('click', register);
