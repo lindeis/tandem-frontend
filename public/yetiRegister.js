@@ -8,7 +8,7 @@ function initRegisterForm() {
     showPasswordCheck.addEventListener('change', function () { onPasswordToggleChange(event, confirmPassword); });
 }
 
-window.onload = function() {
+window.onload = function () {
     initLoginForm();
     initRegisterForm();
 };

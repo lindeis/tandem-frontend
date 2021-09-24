@@ -1,3 +1,5 @@
+import { frontend } from "./host.js";
+
 let alert = document.createElement('div');
 alert.classList.add('alert');
 alert.classList.add('d-flex');
@@ -24,7 +26,7 @@ function successfulRegistration() {
     document.body.appendChild(alert);
 }
 
-if (window.location.href === 'http://localhost:3000/login?redirectedFrom=register') {
+if (window.location.href === frontend('login', { 'redirectedFrom': 'register' })) {
     successfulRegistration();
 }
 

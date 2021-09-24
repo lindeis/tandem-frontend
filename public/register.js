@@ -1,19 +1,21 @@
-import {frontend, backend} from './host.js';
+import { frontend, backend } from './host.js';
+import { alert, img, message } from '/alert.js';
 
 async function register() {
 	const username = document.getElementById("username").value;
-	const pw1 = document.getElementById("password").value;
-	const pw2 = document.getElementById("confirmPassword").value;
+	const password = document.getElementById("password").value;
+	const confirmPassword = document.getElementById("confirmPassword").value;
 
-	let error = document.getElementById('error');
-	error.style.color = 'red';
-	error.style.textAlign = 'center';
-	if (pw1 !== pw2) {
-		error.innerText = "The passwords are not matching.";
+	alert.classList.add('alert-danger');
+	img.src = 'assets/exclamation-triangle-fill.svg';
+
+	if (password !== confirmPassword) {
+		message.innerHTML = 'Passwords do not match';
+		document.body.appendChild(alert);
 		return;
 	}
 
-	event.preventDefault();	// Prevents the submit button from reloading the page and possibly iterrupting the fetch
+	event.preventDefault();
 
 	const response = await fetch(backend("register"), {
 		method: 'POST',
@@ -22,20 +24,27 @@ async function register() {
 		},
 		body: JSON.stringify({
 			'username': username,
-			'password': pw1
+			'password': password
 		})
 	})
 
 	const responseJson = await response.json();
+
 	if (response.ok) {
 		window.location.href = frontend("login", {
 			"redirectedFrom": "register"
 		});
-	} else {
-		error.innerText = responseJson.message;
+	}
+	if (response.status === 400) {
+		message.innerHTML = 'Please fill in all fields';
+		document.body.appendChild(alert);
+	}
+	if (response.status === 409) {
+		message.innerHTML = 'Username already taken'
+		document.body.appendChild(alert);
 	}
 }
 
-let registerButton = document.getElementById('register');
+const registerButton = document.getElementById('register');
 
 registerButton.addEventListener('click', register);
