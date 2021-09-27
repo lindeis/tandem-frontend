@@ -2,6 +2,7 @@ import {frontend, backend} from './host.js';
 
 var roomName;
 var username;
+var stompClient = null;
 
 window.onload = async function roomOnLoad() {
 	const urlParams = new URLSearchParams(window.location.search);
@@ -10,6 +11,7 @@ window.onload = async function roomOnLoad() {
 	if (localStorage.getItem("tandem-token") === null) {
 		redirectToLogin();
 	} else {
+		connect();
 		document.getElementById("leaveButton").onclick = function() { leaveRoom(); };
 		username = await getUsername();
 		const roomInfo = await queryRoom();
@@ -80,24 +82,22 @@ function fillTable(tbody, players) {
 }
 
 function fillPlayer(row, position, players) {
+	const cell = row.insertCell();
+	cell.setAttribute("data-position", position);
+	cell.className = "playerCell";
 	if (players[position]) {
 		if (players[position] == username) {
-			const button = document.createElement("button");
-			button.innerHTML = "Stand";
-			button.onclick = function () { stand(position, button); }
-			row.insertCell().appendChild(button);
+			cell.appendChild(standButton());
 		} else {
-			row.insertCell().innerHTML = players[position];
+			cell.innerHTML = players[position];
 		}
 	} else {
-		const button = document.createElement("button");
-		button.innerHTML = "Sit";
-		button.onclick = function () { sit(position, button); }
-		row.insertCell().appendChild(button);
+		cell.appendChild(sitButton(position));
 	}
 }
 
 async function leaveRoom() {
+	stand();
 	const response = await fetch(backend("lobby/leave", {"room":roomName}), {
 		method: 'POST',
 		headers: {
@@ -108,34 +108,72 @@ async function leaveRoom() {
 	location.href = frontend("lobby");
 }
 
-async function sit(position, button) {
-	const response = await fetch(backend("room/sit", {"room":roomName, "position":position}), {
-		method: 'POST',
-		headers: {
-			'tandem-token': localStorage.getItem("tandem-token"),
-			'Content-Type': 'application/json'
-	}});
-	if (response.ok) {
-		button.innerHTML = "Stand";
-		button.onclick = function() { stand(position, button); }
-	} else {
-		const responseJson = await response.json();
-		document.getElementById("message").innerHTML = responseJson.message;
+async function connect() {
+	var socket = new SockJS(backend("stomp"));
+	stompClient = Stomp.over(socket);
+	stompClient.debug = function(){};	// Disables console logging
+    stompClient.connect({"tandem-token":localStorage.getItem("tandem-token")}, function (frame) {
+        stompClient.subscribe('/room/' + roomName, function(response) {
+        	handleTableEvent(JSON.parse(response.body));
+        });
+    });
+}
+
+function disconnect() {
+    if (stompClient !== null) {
+        stompClient.disconnect();
+    }
+}
+
+function sit(position) {
+    stompClient.send("/app/room/" + roomName + "/sit", {}, JSON.stringify({
+    	'position': position
+    }));
+}
+
+function stand() {
+    stompClient.send("/app/room/" + roomName + "/stand", {}, JSON.stringify({}));
+}
+
+function handleTableEvent(tableEvent) {
+	const playerCells = Array.from(document.getElementsByClassName("playerCell"));
+	if (tableEvent.action == "SIT") {
+		playerCells.forEach(playerCell => {
+			if (playerCell.getAttribute("data-position") == tableEvent.position) {
+				if (tableEvent.username == username) {
+					playerCell.innerHTML = "";
+					playerCell.appendChild(standButton());
+				} else {
+					playerCell.innerHTML = tableEvent.username;
+				}
+			} else if (playerCell.innerHTML == tableEvent.username || (username == tableEvent.username && playerCell.getElementsByClassName("standButton").length > 0)) {
+				playerCell.innerHTML = "";
+				playerCell.appendChild(sitButton(playerCell.getAttribute("data-position")));
+			}
+		})
+	}
+	if (tableEvent.action == "STAND") {
+		playerCells.forEach(playerCell => {
+			if (playerCell.getAttribute("data-position") == tableEvent.position) {
+				playerCell.innerHTML = "";
+				playerCell.appendChild(sitButton(playerCell.getAttribute("data-position")));
+			}
+		})
 	}
 }
 
-async function stand(position, button) {
-	const response = await fetch(backend("room/stand"), {
-		method: 'POST',
-		headers: {
-			'tandem-token': localStorage.getItem("tandem-token"),
-			'Content-Type': 'application/json'
-	}});
-	if (response.ok) {
-		button.innerHTML = "Sit";
-		button.onclick = function() { sit(position, button); }
-	} else {
-		const responseJson = await response.json();
-		document.getElementById("message").innerHTML = responseJson.message;
-	}
+function sitButton(position) {
+	const button = document.createElement("button");
+	button.innerHTML = "Sit";
+	button.className = "sitButton";
+	button.onclick = function() {sit(position);};
+	return button;
+}
+
+function standButton() {
+	const button = document.createElement("button");
+	button.innerHTML = "Stand";
+	button.className = "standButton";
+	button.onclick = function() {stand();};
+	return button;
 }

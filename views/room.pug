@@ -1,6 +1,8 @@
 doctype html
 head
 	link(rel='icon' href='assets/favicon.ico' type='image/x-icon')
+	script(src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js")
+	script(src="stomp.js")
 	script(type="module", src="room.js")
 body
 	h1#roomHeader
